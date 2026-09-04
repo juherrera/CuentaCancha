@@ -24,6 +24,15 @@ def mostrar_formulario_cuenta():
         if responsable.strip() and hora_inicio and hora_fin:
             if hora_inicio >= hora_fin:
                 st.error("La hora de inicio debe ser anterior a la hora de fin.")
+            elif any(
+                cuenta.get("cancha") == cancha
+                and cuenta.get("estado", "Abierta") == "Abierta"
+                for cuenta in st.session_state.cuentas
+            ):
+                st.error(
+                    "La cancha seleccionada ya tiene una cuenta abierta. "
+                    "Debes cerrar la cuenta existente antes de abrir una nueva."
+                )
             else:
                 st.session_state.cuentas.append({
                     "cancha": cancha,
