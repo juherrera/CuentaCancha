@@ -1,11 +1,5 @@
 import streamlit as st
 
-productos_disponibles = [
-    {"nombre": "Bebida", "precio": 2000, "icono": "🥤"},
-    {"nombre": "Kit de pelotas", "precio": 8000, "icono": "🏓"},
-    {"nombre": "Agua", "precio": 1500, "icono": "💧"},
-]
-
 if "cuentas" not in st.session_state:
     st.session_state.cuentas = []
 
@@ -14,6 +8,13 @@ if "pedidos" not in st.session_state:
 
 if "cuenta_seleccionada" not in st.session_state:
     st.session_state.cuenta_seleccionada = None
+
+if "productos_catalogo" not in st.session_state:
+    st.session_state.productos_catalogo = []
+
+
+def obtener_productos_disponibles():
+    return list(st.session_state.get("productos_catalogo", []))
 
 
 def calcular_total_cuenta(cuenta_actual, pedidos_actuales):
@@ -55,48 +56,57 @@ col_izquierda, col_derecha = st.columns([1.4, 1])
 
 with col_izquierda:
     st.subheader("Agregar productos")
+    productos_disponibles = obtener_productos_disponibles()
 
-    for producto in productos_disponibles:
-        nombre = producto["nombre"]
-        precio = producto["precio"]
-        icono = producto["icono"]
+    if not productos_disponibles:
+        st.warning(
+            "No existen productos cargados. Debes cargar un catálogo de productos desde la sección Productos antes de agregar pedidos a una cuenta."
+        )
+        if st.button("Ir a Productos"):
+            st.switch_page("pages/Productos.py")
+    else:
+        with st.container(height=640):
+            for producto in productos_disponibles:
+                nombre = producto.get("Nombre", "")
+                precio = producto.get("Precio", 0)
+                icono = producto.get("Icono", "📦")
 
-        with st.container():
-            col_prod, col_precio, col_cantidad, col_boton = st.columns([2.2, 1, 1, 1])
+                with st.container():
+                    col_prod, col_precio, col_cantidad, col_boton = st.columns([2.2, 1, 1, 1])
 
-            with col_prod:
-                st.markdown(f"{icono} {nombre}")
+                    with col_prod:
+                        st.markdown(f"{icono} {nombre}")
 
-            with col_precio:
-                st.markdown(f"${precio:,.0f}")
+                    with col_precio:
+                        st.markdown(f"${precio:,.0f}")
 
-            with col_cantidad:
-                cantidad = st.number_input(
-                    "Cantidad",
-                    min_value=0,
-                    max_value=20,
-                    value=0,
-                    step=1,
-                    key=f"qty_{indice_cuenta}_{nombre}",
-                    label_visibility="collapsed",
-                )
+                    with col_cantidad:
+                        cantidad = st.number_input(
+                            "Cantidad",
+                            min_value=0,
+                            max_value=20,
+                            value=0,
+                            step=1,
+                            key=f"qty_{indice_cuenta}_{nombre}",
+                            label_visibility="collapsed",
+                        )
 
-            with col_boton:
-                if st.button("Agregar", key=f"add_{indice_cuenta}_{nombre}"):
-                    if cantidad > 0:
-                        item_existente = next((item for item in cuenta_pedidos if item["nombre"] == nombre), None)
-                        if item_existente:
-                            item_existente["cantidad"] += cantidad
-                        else:
-                            cuenta_pedidos.append({
-                                "nombre": nombre,
-                                "precio": precio,
-                                "cantidad": cantidad,
-                            })
+                    with col_boton:
+                        if st.button("Agregar", key=f"add_{indice_cuenta}_{nombre}"):
+                            if cantidad > 0:
+                                item_existente = next((item for item in cuenta_pedidos if item["nombre"] == nombre), None)
+                                if item_existente:
+                                    item_existente["cantidad"] += cantidad
+                                else:
+                                    cuenta_pedidos.append({
+                                        "nombre": nombre,
+                                        "precio": precio,
+                                        "cantidad": cantidad,
+                                    })
 
-                        guardar_total_cuenta(indice_cuenta, cuenta_pedidos)
-                        st.success(f"{cantidad} {nombre} agregado(s)")
-                        st.rerun()
+                                guardar_total_cuenta(indice_cuenta, cuenta_pedidos)
+                                st.success(f"{cantidad} {nombre} agregado(s)")
+                                st.rerun()
 
 with col_derecha:
     col_guardar, col_cobrar = st.columns(2)

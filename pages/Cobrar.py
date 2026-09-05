@@ -74,7 +74,7 @@ with panel:
             label_visibility="collapsed",
         )
 
-if st.button("Confirmar cobro", type="primary", use_container_width=True):
+if st.button("Confirmar cobro", type="primary", width="stretch"):
     st.session_state.cuentas[indice_cuenta]["estado"] = "COBRADA"
     st.session_state.cuentas[indice_cuenta]["metodo_pago"] = metodo_pago
     st.session_state.cuenta_seleccionada = None

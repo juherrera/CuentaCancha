@@ -18,7 +18,7 @@ def mostrar_formulario_cuenta():
         with col_hora_fin:
             hora_fin = st.time_input("Hora Fin", value=time(10, 0), step=1800)
 
-        enviado = st.form_submit_button("Agregar Cuenta", use_container_width=True)
+        enviado = st.form_submit_button("Agregar Cuenta", width="stretch")
 
     if enviado:
         if responsable.strip() and hora_inicio and hora_fin:
