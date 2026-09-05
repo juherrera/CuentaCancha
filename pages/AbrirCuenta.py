@@ -1,4 +1,4 @@
-import streamlit as st # type: ignore[import-not-found]
+import streamlit as st
 from datetime import time
 
 canchas_disponibles = ['Cancha 1','Cancha 2','Cancha 3','Cancha 4','Cancha 5']

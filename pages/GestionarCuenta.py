@@ -1,4 +1,4 @@
-import streamlit as st  # type: ignore[import-not-found]
+import streamlit as st
 
 productos_disponibles = [
     {"nombre": "Bebida", "precio": 2000, "icono": "🥤"},

@@ -1,4 +1,4 @@
-import streamlit as st  # type: ignore[import-not-found]
+import streamlit as st
 
 if "cuentas" not in st.session_state:
     st.session_state.cuentas = []

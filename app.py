@@ -1,5 +1,5 @@
 # pyright: reportMissingImports=false
-import streamlit as st  # type: ignore
+import streamlit as st
 
 from pages.AbrirCuenta import mostrar_formulario_cuenta
 
@@ -90,15 +90,22 @@ with st.sidebar:
     st.write("---") # Línea divisoria discreta
     mostrar_formulario_cuenta()
 
-#if st.button("Historial Cuentas Pagadas"):
-#    st.switch_page("pages/HistorialCuentasPagadas.py")
-#st.write("---")
+    st.divider()
+    st.subheader("Navegación")
+    st.page_link("pages/Productos.py", label="Productos", icon="🥤")
+    st.page_link("pages/HistorialCuentasCobradas.py", label="Historial de cuentas cobradas", icon="📙")
 
 
 # 4. Creamos filas dinámicas usando st.columns (3 tarjetas por fila)
 cols = st.columns(3)
 
-for index, cuenta in enumerate(st.session_state.cuentas):
+cuentas_activas = [
+    (index, cuenta)
+    for index, cuenta in enumerate(st.session_state.cuentas)
+    if cuenta.get("estado", "Abierta") != "COBRADA"
+]
+
+for index, cuenta in cuentas_activas:
     estado = cuenta.get('estado', 'Abierta')
     color = '#28a745' if estado == 'Abierta' else '#dc3545'
     pedidos = cuenta.get('pedidos', [])
