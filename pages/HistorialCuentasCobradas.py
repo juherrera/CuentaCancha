@@ -81,7 +81,7 @@ def mostrar_detalle(indice, cuenta):
             }
         )
 
-    st.dataframe(pd.DataFrame(detalle), hide_index=True, use_container_width=True)
+    st.dataframe(pd.DataFrame(detalle), hide_index=True, width="stretch")
     st.markdown(f"**Total de la cuenta:** ${cuenta.get('total', 0):,.0f}")
 
 
@@ -209,7 +209,7 @@ for fila in df.to_dict("records"):
     if columnas[8].button(
         "Ver detalle",
         key=f"detalle_cuenta_{fila['ID']}",
-        use_container_width=True,
+        width="stretch",
     ):
         mostrar_detalle(fila["ID"], cuentas_por_id[fila["ID"]])
     st.divider()

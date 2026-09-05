@@ -26,8 +26,8 @@ cuenta_pedidos = cuenta.get("pedidos", [])
 
 st.markdown("<style> .stButton > button { width: 100%; } </style>", unsafe_allow_html=True)
 
-if st.button("← Volver"):
-    volver_a_cuenta()
+#if st.button("← Volver"):
+#    volver_a_cuenta()
 
 st.markdown("### Cobrar cuenta")
 
@@ -68,7 +68,7 @@ with panel:
     with derecha:
         st.markdown("### Medio de pago")
         metodo_pago = st.radio(
-            "",
+            "Medio de pago",
             ["Efectivo", "Débito", "Transferencia"],
             index=0,
             label_visibility="collapsed",
