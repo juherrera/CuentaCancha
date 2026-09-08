@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import time
 
-canchas_disponibles = ['Cancha 1','Cancha 2','Cancha 3','Cancha 4','Cancha 5', 'Jumper Park']
+canchas_disponibles = ['Cancha 1','Cancha 2','Cancha 3','Cancha 4','Cancha 5']
 
 def mostrar_formulario_cuenta():
     """Muestra el formulario 'Crear Cuenta' y agrega la transaccion al session_state cuando se envia."""
