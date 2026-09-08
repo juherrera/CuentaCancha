@@ -135,7 +135,7 @@ for index, cuenta in cuentas_activas:
 
             st.markdown("---")
             st.markdown(f"<div style='font-size:12px; color:#4a5568; min-height:52px;'>{vista_pedidos.replace(chr(10), '<br>')}</div>", unsafe_allow_html=True)
-            st.markdown(f"<div style='font-size:22px; font-weight:bold; color:#0b6623; margin-top:8px;'>${cuenta.get('total', 0):,}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size:22px; font-weight:bold; color:#0b6623; margin-top:8px;'>${cuenta.get('total', 0):,.0f}</div>", unsafe_allow_html=True)
 
             if st.button("Ver cuenta", key=f"btn_{index}", width="stretch"):
                 st.session_state.cuenta_seleccionada = index

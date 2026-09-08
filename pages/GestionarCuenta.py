@@ -20,7 +20,7 @@ def obtener_productos_disponibles():
 def calcular_total_cuenta(cuenta_actual, pedidos_actuales):
     base = cuenta_actual.get("total_base", cuenta_actual.get("total", 0))
     total_pedidos = sum(item.get("precio", 0) * item.get("cantidad", 0) for item in pedidos_actuales)
-    return base + total_pedidos
+    return round(base + total_pedidos)
 
 
 def guardar_total_cuenta(indice, pedidos_actuales):
@@ -174,4 +174,3 @@ with col_derecha:
         )
         st.markdown("---")
         st.markdown(f"<h3 style='text-align: right;'>TOTAL ${total_final:,.0f}</h3>", unsafe_allow_html=True)
-
