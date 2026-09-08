@@ -1,0 +1,7 @@
+services:
+  padelcenter:
+    build: .
+    container_name: padelcenter-demo
+    ports:
+      - "8501:8501"
+    restart: unless-stopped
